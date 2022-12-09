@@ -3,7 +3,7 @@
 ## Dependencies
 - GNU Libraries
 - GNU Cmake/Make
-- SFML
+- OpenGL
 
 
 ## How to compile
