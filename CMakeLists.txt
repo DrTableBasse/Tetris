@@ -1,8 +1,11 @@
-set( SRC 
-    src/main.cpp
-    src/example.cpp
+cmake_minimum_required(VERSION 2.8)
+
+project(tetris)
+
+set( SRC
+	src/main.cpp
+	src/example.cpp
 )
 
-cmake_minimum_required(VERSION 3.0)
-project(Tetris)
-add_executable(tetris "${SRC}")
+add_executable(tetris ${SRC})
+target_link_libraries(tetris GL GLU GLEW glfw)
