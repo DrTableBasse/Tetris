@@ -1,9 +1,9 @@
 # TETRESGI
 
 ## Dependencies
-    - GNU Libraries
-    - GNU Cmake/Make
-    - SFML
+> GNU Libraries
+> GNU Cmake/Make
+> SFML
 
 
 ## How to compile
