@@ -1,12 +1,15 @@
 # TETRESGI
 
 ## Dependencies
-> GNU Libraries
-> GNU Cmake/Make
-> SFML
+- GNU Libraries
+- GNU Cmake/Make
+- SFML
 
 
 ## How to compile
-- `cd build`
-- `Cmake ..`
-- `./tetris` or `tetris.exe`
+  ```sh
+  cd build
+  cmake ..
+  ./tetris
+  ```
+> Use `tetris.exe` on Windows
