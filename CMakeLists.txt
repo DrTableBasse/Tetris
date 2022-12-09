@@ -1,3 +1,8 @@
+set( SRC 
+    src/main.cpp
+    src/example.cpp
+)
+
 cmake_minimum_required(VERSION 3.0)
 project(Tetris)
-add_executable(tetris main.cpp)
+add_executable(tetris "${SRC}")
