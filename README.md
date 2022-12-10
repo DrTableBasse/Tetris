@@ -10,6 +10,7 @@
   ```sh
   cd build
   cmake ..
+  make
   ./tetris
   ```
 > Use `tetris.exe` on Windows
