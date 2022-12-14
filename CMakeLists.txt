@@ -1,10 +1,13 @@
 cmake_minimum_required(VERSION 2.8)
 
-project(tetris)
+project(tetris CXX)
 
 set( SRC
 	src/main.cpp
 	src/example.cpp
+	src/vertex.cpp
+
+	common/shader.cpp
 )
 
 add_executable(tetris ${SRC})
