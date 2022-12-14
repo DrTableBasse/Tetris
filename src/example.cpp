@@ -13,6 +13,9 @@ GLFWwindow* window;
 #include <glm/glm.hpp>
 using namespace glm;
 
+#include "../common/shader.hpp"
+#include "../include/vertex.h"
+
 int test(void)
 {
 	// Initialise GLFW
@@ -47,19 +50,30 @@ int test(void)
 		return -1;
 	}
 
+	// Create and compile our GLSL program from the shaders
+	GLuint programID = LoadShaders( "../shaders/SimpleVertexShader.vertexshader", "../shaders/SimpleFragmentShader.fragmentshader" );
+
 	// Ensure we can capture the escape key being pressed below
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
-	// Dark blue background
-	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+	// Dark background
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+	// This will identify our vertex buffer
+	GLuint vertexbuffer;
+	init_triangle(vertexbuffer);
 
 	do{
 		// Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
 		glClear( GL_COLOR_BUFFER_BIT );
 
-		// Draw nothing, see you in tutorial 2 !
+		glUseProgram(programID);
+		glEnableVertexAttribArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+		glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,0,(void*)0);
 
-		
+		draw_triangle();
+
 		// Swap buffers
 		glfwSwapBuffers(window);
 		glfwPollEvents();
