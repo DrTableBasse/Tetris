@@ -10,11 +10,12 @@ project(${PROJECT_NAME} CXX)
 #Source files
 set( SRC
 	src/main.cpp
+    src/tetromino.cpp
 )
 
 #SFML lib location
 set( CMAKE_SOURCE_DIR
-    ${CMAKE_CURRENT_SOURCE_DIR}/../SFML-2.5.1
+    ${CMAKE_CURRENT_SOURCE_DIR}/SFML-2.5.1
 )
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
