@@ -10,11 +10,20 @@ int main(void)
 {
     RenderWindow window(VideoMode(960, 650), "TetrESGI", Style::Titlebar | Style::Close);
     auto image = sf::Image{};
-    // if (!image.loadFromFile("../sprites/logo.jpg"))
-    //     cout << "Icone n'a pas chargé\n";
-    // window.setIcon(image.getSize().x, image.getSize().y, image.getPixelsPtr());
+    if (!image.loadFromFile("../sprites/logo.jpg"))
+        cout << "Icone n'a pas chargé\n";
+    window.setIcon(image.getSize().x, image.getSize().y, image.getPixelsPtr());
 
-    Clock clock;
+    Texture texture;
+    Sprite sprite;
+
+    if (!texture.loadFromFile("../sprites/logo.jpg"))
+    {
+        cout << "Texture n'a pas chargé\n";
+    }
+
+    sprite.setTexture(texture);
+
 
     //Frame loop
     while (window.isOpen())
@@ -32,7 +41,7 @@ int main(void)
 
         //Clearing the window after each draw
         window.clear(Color(0, 0, 0));
-
+        window.draw(sprite);
         window.display();
     }
 
