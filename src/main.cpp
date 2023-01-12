@@ -2,7 +2,7 @@
 #include <cstdio>
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "../include/board.h"
+#include "../include/tetromino.h"
 
 using namespace sf;
 using namespace std;
@@ -19,8 +19,20 @@ int main(void)
         cout << "Icone n'a pas chargé\n";
     window.setIcon(image.getSize().x, image.getSize().y, image.getPixelsPtr());
 
-    //declaration of the board
+    //texture create and loading spritesheet
+    Texture texture;
+    if (!texture.loadFromFile("../sprites/spritesheet.png")) {
+        cout << "Le spritesheet n'a pas load\n";
+    }
+
+    Clock clock;
+
+    //declaration of the board (default = 10x20)
+    //you can access board.setsize() to change board's size
     Board board;
+
+    //piece declaration
+    Tetromino piece('j', &texture, 4);
 
     //Frame loop
     while (window.isOpen())
@@ -34,13 +46,41 @@ int main(void)
                 window.close();
             if (Keyboard::isKeyPressed(Keyboard::Escape))
                 window.close();
+            if (Keyboard::isKeyPressed(Keyboard::Left)) {
+                while(clock.getElapsedTime().asSeconds() > 0.05f) {
+                    piece.setpos(Vector2f(-24, 0), 0); 
+                    clock.restart();
+                }
+            }
+            if (Keyboard::isKeyPressed(Keyboard::Right)) {
+                while(clock.getElapsedTime().asSeconds() > 0.05f) {
+                    piece.setpos(Vector2f(24, 0), 0); 
+                    clock.restart();
+                }
+            }
+            if (Keyboard::isKeyPressed(Keyboard::A)) {
+                while(clock.getElapsedTime().asSeconds() > 0.1f) {
+                    piece.setpos(Vector2f(0, 0), 1); 
+                    clock.restart();
+                }
+            }
+            if (Keyboard::isKeyPressed(Keyboard::E)) {
+                while(clock.getElapsedTime().asSeconds() > 0.1f) {
+                    piece.setpos(Vector2f(0, 0), -1); 
+                    clock.restart();
+                }
+            }
         }
 
         //Clearing the window after each draw
         window.clear(Color(0, 0, 0));
 
-        //display your sprites here
-
+        //draw each piece blocks (max 4)
+        for (int i = 0; i != 4; i++) {
+            window.draw(piece.blocks[i]);
+        }
+            
+        //
         window.display();
     }
 
