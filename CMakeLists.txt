@@ -11,6 +11,7 @@ project(${PROJECT_NAME} CXX)
 set( SRC
 	src/main.cpp
     src/tetromino.cpp
+    src/board.cpp
 )
 
 #SFML lib location

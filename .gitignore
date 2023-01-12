@@ -4,4 +4,6 @@ x64/
 *.vcxproj
 *.filters
 *.user
+.vscode
+*.pdn
 SFML-2.5.1
