@@ -41,6 +41,12 @@ void Tetromino::setpos(Vector2f pos, int state)
     N T R  S A M; //this bit is mandatory
     int k = 0;
 
+    if (!canControl) { //if block locked, disable rotation & movement
+        pos.x = 0;
+        pos.y = 0;
+        state = 0;
+    }
+
     //add positions and state for events
     this->pos += pos;
     this->state += state;

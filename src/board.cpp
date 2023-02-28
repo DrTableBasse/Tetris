@@ -18,6 +18,9 @@ void Board::size(int x, int y)
 
     for (int i = 0; i != 20; i++)
         tab[i] = (char *)malloc(sizeof(char) * 10);
+
+    this->x = x;
+    this->y = y;
 }
 
 //function for declaring a board
@@ -27,8 +30,8 @@ Board::Board(void)
     this->size(10, 20);
     
     //remove these 2 lines, they are for debug
-    this->tab[1][3] = '1';
-    printf("%c\n", this->tab[0][3]);
+    // this->tab[1][3] = '1';
+    // printf("%c\n", this->tab[0][3]);
     //
 };
 

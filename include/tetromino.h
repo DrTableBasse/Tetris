@@ -19,10 +19,12 @@ class Tetromino {
         IntRect bounds; //texture bounds (24px)
         
     public :
+
         Tetromino(char type, Texture *texture, int style); //constructor
         Vector2f pos;
         Sprite blocks[4]; //sprite board containing each block inside a piece
         int state; //rotation state (max 4) = 360 degrees
         void display(Board board);
         void setpos(Vector2f pos, int state);
+        bool canControl = true;
 };
