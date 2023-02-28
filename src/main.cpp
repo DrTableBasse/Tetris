@@ -1,3 +1,12 @@
+/*
+
+ Author: Yannis STEFANELLI
+
+ Creation Date: 28-02-2023 22:12:29
+
+ Description :
+ Main project file
+*/
 
 #include <cstdio>
 #include <iostream>
@@ -5,7 +14,6 @@
 #include "../include/tetromino.h"
 
 using namespace sf;
-using namespace std;
 
 int main(void)
 {
@@ -26,13 +34,14 @@ int main(void)
     }
 
     Clock clock;
+    Clock fall;
 
     //declaration of the board (default = 10x20)
     //you can access board.setsize() to change board's size
     Board board;
 
     //piece declaration
-    Tetromino piece('j', &texture, 4);
+    Tetromino piece('t', &texture, 2);
 
     //Frame loop
     while (window.isOpen())
@@ -78,6 +87,14 @@ int main(void)
         //draw each piece blocks (max 4)
         for (int i = 0; i != 4; i++) {
             window.draw(piece.blocks[i]);
+        }
+        //Repetitive fall
+        if (fall.getElapsedTime().asSeconds() > 0.2 && piece.pos.y <= 24 * board.y) { //if piece.y < board size
+            piece.setpos(Vector2f(0, 24), 0);
+            fall.restart();
+        } 
+        if (piece.pos.y >= 24 * board.y) {
+            piece.canControl = false;
         }
             
         //
