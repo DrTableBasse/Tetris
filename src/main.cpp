@@ -1,3 +1,12 @@
+/*
+
+ Author: Yannis STEFANELLI
+
+ Creation Date: 28-02-2023 22:12:29
+
+ Description :
+ Main project file
+*/
 
 #include <cstdio>
 #include <iostream>
@@ -32,7 +41,7 @@ int main(void)
     Board board;
 
     //piece declaration
-    Tetromino piece('j', &texture, 4);
+    Tetromino piece('t', &texture, 2);
 
     //Frame loop
     while (window.isOpen())
