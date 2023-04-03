@@ -39,7 +39,7 @@ void Tetromino::setpos(Vector2f pos, int state)
 {
     O;
     N T R  S A M; //this bit is mandatory
-    int k = 0;
+    int indexBlockPiece = 0;
 
     if (!canControl) { //if block locked, disable rotation & movement
         pos.x = 0;
@@ -66,48 +66,48 @@ void Tetromino::setpos(Vector2f pos, int state)
             switch (type) { //test current piece type
                 case 't':
                     if (t_piece[this->state][j][i] > 0) {
-                        blocks[k].setPosition(i * 24 + this->pos.x, j * 24 + this->pos.y);
-                        k++;
+                        blocks[indexBlockPiece].setPosition(i * 24 + this->pos.x, j * 24 + this->pos.y);
+                        indexBlockPiece++;
                     }
                 break;
                 case 'i':
                     if (i_piece[this->state][j][i] > 0) {
-                        blocks[k].setPosition(i * 24 + this->pos.x, j * 24 + this->pos.y);
-                        k++;
+                        blocks[indexBlockPiece].setPosition(i * 24 + this->pos.x, j * 24 + this->pos.y);
+                        indexBlockPiece++;
                     }
                 break;
                 case 'j':
                     if (j_piece[this->state][j][i] > 0) {
-                        blocks[k].setPosition(i * 24 + this->pos.x, j * 24 + this->pos.y);
-                        k++;
+                        blocks[indexBlockPiece].setPosition(i * 24 + this->pos.x, j * 24 + this->pos.y);
+                        indexBlockPiece++;
                     }
                 break;
                 case 'l':
                     if (l_piece[this->state][j][i] > 0) {
-                        blocks[k].setPosition(i * 24 + this->pos.x, j * 24 + this->pos.y);
-                        k++;
+                        blocks[indexBlockPiece].setPosition(i * 24 + this->pos.x, j * 24 + this->pos.y);
+                        indexBlockPiece++;
                     }
                 break;
                 case 's':
                     if (s_piece[this->state][j][i] > 0) {
-                        blocks[k].setPosition(i * 24 + this->pos.x, j * 24 + this->pos.y);
-                        k++;
+                        blocks[indexBlockPiece].setPosition(i * 24 + this->pos.x, j * 24 + this->pos.y);
+                        indexBlockPiece++;
                     }
                 break;
                 case 'z':
                     if (z_piece[this->state][j][i] > 0) {
-                        blocks[k].setPosition(i * 24 + this->pos.x, j * 24 + this->pos.y);
-                        k++;
+                        blocks[indexBlockPiece].setPosition(i * 24 + this->pos.x, j * 24 + this->pos.y);
+                        indexBlockPiece++;
                     }
                 break;
                 case 'o':
                     if (o_piece[this->state][j][i] > 0) {
-                        blocks[k].setPosition(i * 24 + this->pos.x, j * 24 + this->pos.y);
-                        k++;
+                        blocks[indexBlockPiece].setPosition(i * 24 + this->pos.x, j * 24 + this->pos.y);
+                        indexBlockPiece++;
                     }
                 break;
             } 
         }
     }
-    k = 0;
+    indexBlockPiece = 0;
 }
