@@ -8,7 +8,6 @@
  Main project file
 */
 
-#include <cstdio>
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "../include/tetromino.h"
