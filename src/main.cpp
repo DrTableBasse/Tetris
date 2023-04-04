@@ -10,6 +10,7 @@
 
 #include <cstdio>
 #include <iostream>
+#include <vector>
 #include <SFML/Graphics.hpp>
 #include "../include/tetromino.h"
 
@@ -42,6 +43,8 @@ int main(void)
 
     //piece declaration
     Tetromino piece('t', &texture, 2);
+
+    vector<Tetromino> piecesList; //push_back //emplace when previous tetromino.canControl == false
 
     //Frame loop
     while (window.isOpen())
