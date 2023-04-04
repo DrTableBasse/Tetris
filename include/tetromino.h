@@ -19,7 +19,6 @@ class Tetromino {
         IntRect bounds; //texture bounds (24px)
         
     public :
-
         Tetromino(Texture *texture, int style); //constructor
         Vector2f pos;
         Sprite blocks[4]; //sprite board containing each block inside a piece
