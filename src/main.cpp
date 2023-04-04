@@ -12,36 +12,21 @@
 #include <SFML/Graphics.hpp>
 #include "../include/tetromino.h"
 #include <SFML/Audio.hpp>
-#include <list>
+#include <vector>
 
 using namespace sf;
 
-bool verifyColision(const std::list<Tetromino> &pieceList)
+bool verifyColision(const Tetromino &piece, const std::vector<Sprite> &blockList)
 {
-    auto piece = pieceList.begin();
-//    for(const auto &piece : pieceList)
-    for(int i = 0; i < pieceList.size(); ++i)
+    for(const auto &blockPiece : piece.blocks)
     {
-//        if(i == pieceList.size() - 1)
-//        {
-//            return false;
-//        }
-
-        const Tetromino &currentPiece = *piece;
-        for(const auto &block : currentPiece.blocks)
+        for(const auto &block : blockList)
         {
-            for(const auto &blockCurrentPiece : pieceList.back().blocks)
+            if(blockPiece.getPosition().y+24 == block.getPosition().y && blockPiece.getPosition().x == block.getPosition().x)
             {
-                if(blockCurrentPiece.getPosition().y == block.getPosition().y + 24)
-                {
-                    if(blockCurrentPiece.getPosition().x == block.getPosition().x)
-                    {
-                        return true;
-                    }
-                }
+                return true;
             }
         }
-        ++piece;
     }
     return false;
 }
@@ -84,8 +69,8 @@ int main()
     Board board;
 
     //piece declaration
-    std::list<Tetromino> pieceList;
-    pieceList.emplace_back('t', &texture, 2);
+    std::vector<Sprite> listBlock;
+    Tetromino           piece(&texture, 2);
 
     //Frame loop
     while(window.isOpen())
@@ -108,7 +93,7 @@ int main()
             {
                 while(clock.getElapsedTime().asSeconds() > 0.05f)
                 {
-                    pieceList.back().setpos(Vector2f(-24, 0), 0);
+                    piece.setpos(Vector2f(-24, 0), 0);
                     clock.restart();
                 }
             }
@@ -116,7 +101,7 @@ int main()
             {
                 while(clock.getElapsedTime().asSeconds() > 0.05f)
                 {
-                    pieceList.back().setpos(Vector2f(24, 0), 0);
+                    piece.setpos(Vector2f(24, 0), 0);
                     clock.restart();
                 }
             }
@@ -124,7 +109,7 @@ int main()
             {
                 while(clock.getElapsedTime().asSeconds() > 0.1f)
                 {
-                    pieceList.back().setpos(Vector2f(0, 0), -1);
+                    piece.setpos(Vector2f(0, 0), -1);
                     clock.restart();
                 }
             }
@@ -132,7 +117,7 @@ int main()
             {
                 while(clock.getElapsedTime().asSeconds() > 0.1f)
                 {
-                    pieceList.back().setpos(Vector2f(0, 0), 1);
+                    piece.setpos(Vector2f(0, 0), 1);
                     clock.restart();
                 }
             }
@@ -142,33 +127,40 @@ int main()
         window.clear(Color(0, 0, 0));
 
         //draw each piece blocks (max 4)
-        for(const auto &piece: pieceList)
+        for(const auto &block: piece.blocks)
         {
-            for(const auto &block: piece.blocks)
-            {
-                window.draw(block);
-            }
+            window.draw(block);
+        }
+        for(const auto &block: listBlock)
+        {
+            window.draw(block);
         }
 
-        bool colision = verifyColision(pieceList);
+        bool colision = verifyColision(piece, listBlock);
         if(!colision)
         {
             //Repetitive fall
-            if(fall.getElapsedTime().asSeconds() > 0.2 && pieceList.back().pos.y <= 24 * board.y)
+            if(fall.getElapsedTime().asSeconds() > 0.2 && piece.pos.y <= 24 * board.y)
             { //if piece.y < board size
-                pieceList.back().setpos(Vector2f(0, 24), 0);
+                piece.setpos(Vector2f(0, 24), 0);
                 fall.restart();
             }
-            if(pieceList.back().pos.y >= 24 * board.y)
+            if(piece.pos.y >= 24 * board.y)
             {
-                pieceList.back().canControl = false;
-                pieceList.emplace_back('t', &texture, 2);
+                for(const auto &block : piece.blocks)
+                {
+                    listBlock.push_back(block);
+                }
+                piece.reset();
             }
         }
         else
         {
-            pieceList.back().canControl = false;
-            pieceList.emplace_back('t', &texture, 2);
+            for(const auto &block : piece.blocks)
+            {
+                listBlock.push_back(block);
+            }
+            piece.reset();
         }
         window.display();
     }
