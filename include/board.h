@@ -16,8 +16,13 @@ using namespace std;
 //Board class definition
 class Board {
     private:
+
         void size(int x, int y);
+        
     public : 
+
+        int x;
+        int y;
         Board(); //constructor
         char **tab;
         void setsize(int x, int y);

@@ -1,11 +1,20 @@
+/*
+
+ Author: Yannis STEFANELLI
+
+ Creation Date: 28-02-2023 22:12:29
+
+ Description :
+ Main project file
+*/
 
 #include <cstdio>
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "../include/tetromino.h"
+#include <SFML/Audio.hpp>
 
 using namespace sf;
-using namespace std;
 
 int main(void)
 {
@@ -26,13 +35,22 @@ int main(void)
     }
 
     Clock clock;
+    Clock fall;
+    SoundBuffer buffer;
+    sf::Sound sound;
+
+    if (!buffer.loadFromFile("../src/musique/soundtrack.ogg"))
+        return -1;
+    sound.setBuffer(buffer);
+    sound.play();
+        
 
     //declaration of the board (default = 10x20)
     //you can access board.setsize() to change board's size
     Board board;
 
     //piece declaration
-    Tetromino piece('j', &texture, 4);
+    Tetromino piece('t', &texture, 2);
 
     //Frame loop
     while (window.isOpen())
@@ -45,7 +63,8 @@ int main(void)
             if (event.type == Event::Closed)
                 window.close();
             if (Keyboard::isKeyPressed(Keyboard::Escape))
-                window.close();
+                return EXIT_SUCCESS;
+                //remplacer par le menu pause
             if (Keyboard::isKeyPressed(Keyboard::Left)) {
                 while(clock.getElapsedTime().asSeconds() > 0.05f) {
                     piece.setpos(Vector2f(-24, 0), 0); 
@@ -60,13 +79,13 @@ int main(void)
             }
             if (Keyboard::isKeyPressed(Keyboard::A)) {
                 while(clock.getElapsedTime().asSeconds() > 0.1f) {
-                    piece.setpos(Vector2f(0, 0), 1); 
+                    piece.setpos(Vector2f(0, 0), -1); 
                     clock.restart();
                 }
             }
             if (Keyboard::isKeyPressed(Keyboard::E)) {
                 while(clock.getElapsedTime().asSeconds() > 0.1f) {
-                    piece.setpos(Vector2f(0, 0), -1); 
+                    piece.setpos(Vector2f(0, 0), 1); 
                     clock.restart();
                 }
             }
@@ -79,10 +98,22 @@ int main(void)
         for (int i = 0; i != 4; i++) {
             window.draw(piece.blocks[i]);
         }
+        //Repetitive fall
+        if (fall.getElapsedTime().asSeconds() > 0.2 && piece.pos.y <= 24 * board.y) { //if piece.y < board size
+            piece.setpos(Vector2f(0, 24), 0);
+            fall.restart();
+        } 
+        if (piece.pos.y >= 24 * board.y) {
+            piece.canControl = false;
+        }
             
         //
         window.display();
     }
+    
 
+
+    
+        
     return 0;
 }

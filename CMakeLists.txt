@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0)
 
 # Executable name
 set(PROJECT_NAME
@@ -7,20 +7,16 @@ set(PROJECT_NAME
 
 project(${PROJECT_NAME} CXX)
 
-#Source files
-set( SRC
-	src/main.cpp
-    src/tetromino.cpp
-    src/board.cpp
-)
+# Source files
+file(GLOB SOURCES "src/*.cpp")
 
 #SFML lib location
-set( CMAKE_SOURCE_DIR
+set(CMAKE_SOURCE_DIR
     ${CMAKE_CURRENT_SOURCE_DIR}/SFML-2.5.1
 )
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 link_directories(${CMAKE_SOURCE_DIR}/lib)
 
-add_executable(${PROJECT_NAME} ${SRC})
-target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system)
+add_executable(${PROJECT_NAME} ${SOURCES})
+target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system sfml-audio)
