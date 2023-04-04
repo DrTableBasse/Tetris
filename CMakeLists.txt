@@ -11,12 +11,28 @@ project(${PROJECT_NAME} CXX)
 file(GLOB SOURCES "src/*.cpp")
 
 #SFML lib location
-set(CMAKE_SOURCE_DIR
+set(SFML_DIR
     ${CMAKE_CURRENT_SOURCE_DIR}/SFML-2.5.1
 )
 
-include_directories(${CMAKE_SOURCE_DIR}/include)
-link_directories(${CMAKE_SOURCE_DIR}/lib)
+include_directories(
+    ${SFML_DIR}/include
+)
+
+link_directories(
+    ${SFML_DIR}/lib
+)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
-target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system sfml-audio)
+
+target_link_libraries(
+    ${PROJECT_NAME}
+    sfml-graphics
+    sfml-window
+    sfml-system
+    sfml-audio
+)
+
+add_compile_options(
+    ofast           # -o3 optimizations on steroids
+)
