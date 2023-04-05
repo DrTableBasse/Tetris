@@ -32,7 +32,7 @@ jobs:
 
     - name: CMake configure
       run: |
-        mkdir build
+
         cd build
         cmake -GNinja ..
     - name: Tetris
