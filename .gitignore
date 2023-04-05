@@ -1,9 +1,10 @@
-.idea/
-x64/
+.idea
+x64
 *.sln
 *.vcxproj
 *.filters
+SFML-2.5.1
+cmake-build-debug
 *.user
 .vscode
 *.pdn
-SFML-2.5.1

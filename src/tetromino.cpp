@@ -15,9 +15,9 @@
 
 using namespace sf;
 
-Tetromino::Tetromino(char type, Texture *texture, int style)
+Tetromino::Tetromino(Texture *texture, int style)
 {
-    this->type = type;
+    resetType();
     for (int i = 0; i != 4; i++)
         this->blocks[i].setTexture(*texture);
     bounds.height = 24;
@@ -110,4 +110,20 @@ void Tetromino::setpos(Vector2f pos, int state)
         }
     }
     indexBlockPiece = 0;
+}
+
+void Tetromino::resetType()
+{
+    char types[7] = {'n', 't', 'r', 's', 'o', 'm', 'a'};
+    this->type = types[std::rand() % 7];
+}
+
+void Tetromino::reset()
+{
+    resetType();
+    this->state = 0;
+    this->pos.x = 0;
+    this->pos.y = 0;
+    this->setpos(this->pos, this->state);
+
 }
