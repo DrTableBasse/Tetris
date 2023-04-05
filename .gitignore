@@ -3,7 +3,6 @@ x64
 *.sln
 *.vcxproj
 *.filters
-SFML-2.5.1
 cmake-build-debug
 *.user
 .vscode
