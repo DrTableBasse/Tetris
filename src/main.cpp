@@ -9,6 +9,7 @@
 */
 
 #include <iostream>
+#include <vector>
 #include <SFML/Graphics.hpp>
 #include "../include/tetromino.h"
 #include <SFML/Audio.hpp>
@@ -71,6 +72,8 @@ int main()
     //piece declaration
     std::vector<Sprite> listBlock;
     Tetromino           piece(&texture, 2);
+
+    vector<Tetromino> piecesList; //push_back //emplace when previous tetromino.canControl == false
 
     //Frame loop
     while(window.isOpen())
