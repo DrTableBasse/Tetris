@@ -1,5 +1,5 @@
 
-name: CI Windows
+name: Windows
 
 # Trigger this workflow on push or pull request
 on: [push, pull_request]
