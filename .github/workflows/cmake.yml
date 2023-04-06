@@ -36,7 +36,10 @@ jobs:
         cmake .. -GNinja
 
     - name: Tetris
-      run: ninja
+      run: |
+        cd build
+        ninja
+
 
 
 
