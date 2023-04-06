@@ -32,9 +32,9 @@ jobs:
 
     - name: CMake configure
       run: |
-
         cd build
-        cmake -GNinja ..
+        cmake .. -GNinja
+
     - name: Tetris
       run: ninja
 
