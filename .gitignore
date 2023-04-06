@@ -1,5 +1,9 @@
-.idea/
-x64/
+.idea
+x64
 *.sln
 *.vcxproj
 *.filters
+cmake-build-debug
+*.user
+.vscode
+*.pdn
