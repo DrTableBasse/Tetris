@@ -23,5 +23,6 @@ target_link_libraries(${PROJECT_NAME}
         sfml-system
         sfml-audio
 )
-
-add_compile_options(ofast -o3 optimizations on steroids)
+add_compile_options(
+        ofast   #-o3 optimizations on steroids
+)

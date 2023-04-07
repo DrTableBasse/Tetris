@@ -1,7 +1,9 @@
 # TETRIS ESGI
   ### This is an algorithmic-based project for ESGI<br/>
   ### We are recreating the famous game `TETRIS` in C++, with a graphic library called SFML
-## Build
+## Build <div align="left">[![CI Windows](https://github.com/Ena-Shepherd/Tetris/actions/workflows/cmake.yml/badge.svg?branch=master)](https://github.com/Ena-Shepherd/Tetris/actions/workflows/cmake.yml)</div>
+
+
 - C++ compiler
 - CMake
 - SFML 2.5.1 in root of the project
