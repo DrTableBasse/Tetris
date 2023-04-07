@@ -11,31 +11,30 @@
 #include "../include/tetromino.h"
 #include "../include/piece.h"
 #include <SFML/Graphics.hpp>
-#include <iostream>
+#include <cstdlib>
 
 using namespace sf;
 
-Tetromino::Tetromino(Texture *texture, int style)
+Tetromino::Tetromino(Texture *texture, int style, Vector2i boardSize)
 {
-    resetType();
-    for (int i = 0; i != 4; i++)
-        this->blocks[i].setTexture(*texture);
+    //setting default positions of piece
+    for(auto & block : this->blocks)
+        block.setTexture(*texture);
     bounds.height = 24;
     bounds.width = 24;
     bounds.left = 24 * style;
 
-    //default state
-    this->state = 0;
+    this->boardSize.x = boardSize.x;
+    this->boardSize.y = boardSize.y;
+
+    reset();
 
     //assign texture to the blocks in the piece
-    for (int i = 0; i != 4; i++)
-        this->blocks[i].setTextureRect(bounds);
-
-    //setting default positions of piece
-    this->setpos(this->pos, this->state);
+    for(auto & block : this->blocks)
+        block.setTextureRect(bounds);
 }
 
-void Tetromino::setpos(Vector2f pos, int state)
+void Tetromino::setpos(Vector2i pos, int state)
 {
     O;
     N T R  S A M; //this bit is mandatory
@@ -58,7 +57,6 @@ void Tetromino::setpos(Vector2f pos, int state)
     //same but backwards
     if (this->state < 0)
         this->state = 3;
-    //
 
     for (int j = 0; j != 4; j++) { //browse indexes
         for (int i = 0; i != 4; i++) {  //
@@ -114,7 +112,7 @@ void Tetromino::setpos(Vector2f pos, int state)
 
 void Tetromino::resetType()
 {
-    char types[7] = {'n', 't', 'r', 's', 'o', 'm', 'a'};
+    char types[7] = { 't', 'i', 'j', 'l', 's', 'z', 'o' };
     this->type = types[std::rand() % 7];
 }
 
@@ -122,8 +120,6 @@ void Tetromino::reset()
 {
     resetType();
     this->state = 0;
-    this->pos.x = 0;
-    this->pos.y = 0;
-    this->setpos(this->pos, this->state);
-
+    this->pos.x = this->boardSize.x/2;
+    this->pos.y = 2*24;
 }
