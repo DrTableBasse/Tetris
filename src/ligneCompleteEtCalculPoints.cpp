@@ -1,8 +1,6 @@
-#include <board.h>
-#include <cstdio>
 #include <iostream>
-#include <algorithme>
-#include <SFML/Graphics.hpp>
+#include <vector>
+#include "../include/board.h"
 
 using namespace sf;
 using namespace std;
