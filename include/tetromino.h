@@ -14,17 +14,18 @@ using namespace sf;
 
 class Tetromino {
     private :
-        int size; //used to scale down/up pieces
-        char type; //this is the style of the piece
+        int size{}; //used to scale down/up pieces
+        char type{}; //this is the style of the piece
         IntRect bounds; //texture bounds (24px)
+        Vector2i boardSize; //board size
         
     public :
-        Tetromino(Texture *texture, int style); //constructor
-        Vector2f pos;
+        Tetromino(Texture *texture, int style, Vector2i boardSize); //constructor
+        Vector2i pos;
         Sprite blocks[4]; //sprite board containing each block inside a piece
-        int state; //rotation state (max 4) = 360 degrees
+        int state{}; //rotation state (max 4) = 360 degrees
         void display(Board board);
-        void setpos(Vector2f pos, int state);
+        void setpos(Vector2i pos, int state);
         void reset();
         void resetType();
         bool canControl = true;

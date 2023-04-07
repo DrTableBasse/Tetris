@@ -71,9 +71,7 @@ int main()
 
     //piece declaration
     std::vector<Sprite> listBlock;
-    Tetromino           piece(&texture, 2);
-
-    vector<Tetromino> piecesList; //push_back //emplace when previous tetromino.canControl == false
+    Tetromino           piece(&texture, 2, Vector2i(res.x, res.y));
 
     //Frame loop
     while(window.isOpen())
@@ -96,7 +94,7 @@ int main()
             {
                 while(clock.getElapsedTime().asSeconds() > 0.05f)
                 {
-                    piece.setpos(Vector2f(-24, 0), 0);
+                    piece.setpos(Vector2i(-24, 0), 0);
                     clock.restart();
                 }
             }
@@ -104,7 +102,7 @@ int main()
             {
                 while(clock.getElapsedTime().asSeconds() > 0.05f)
                 {
-                    piece.setpos(Vector2f(24, 0), 0);
+                    piece.setpos(Vector2i(24, 0), 0);
                     clock.restart();
                 }
             }
@@ -112,7 +110,7 @@ int main()
             {
                 while(clock.getElapsedTime().asSeconds() > 0.1f)
                 {
-                    piece.setpos(Vector2f(0, 0), -1);
+                    piece.setpos(Vector2i(0, 0), -1);
                     clock.restart();
                 }
             }
@@ -120,7 +118,7 @@ int main()
             {
                 while(clock.getElapsedTime().asSeconds() > 0.1f)
                 {
-                    piece.setpos(Vector2f(0, 0), 1);
+                    piece.setpos(Vector2i(0, 0), 1);
                     clock.restart();
                 }
             }
@@ -139,16 +137,21 @@ int main()
             window.draw(block);
         }
 
-        bool colision = verifyColision(piece, listBlock);
-        if(!colision)
+        if(fall.getElapsedTime().asSeconds() > 0.2)
         {
-            //Repetitive fall
-            if(fall.getElapsedTime().asSeconds() > 0.2 && piece.pos.y <= 24 * board.y)
-            { //if piece.y < board size
-                piece.setpos(Vector2f(0, 24), 0);
-                fall.restart();
+            piece.setpos(Vector2i(0, 24), 0);
+            if(!verifyColision(piece, listBlock))
+            {
+                if(piece.pos.y >= 24 * board.y)
+                {
+                    for(const auto &block : piece.blocks)
+                    {
+                        listBlock.push_back(block);
+                    }
+                    piece.reset();
+                }
             }
-            if(piece.pos.y >= 24 * board.y)
+            else
             {
                 for(const auto &block : piece.blocks)
                 {
@@ -156,14 +159,7 @@ int main()
                 }
                 piece.reset();
             }
-        }
-        else
-        {
-            for(const auto &block : piece.blocks)
-            {
-                listBlock.push_back(block);
-            }
-            piece.reset();
+            fall.restart();
         }
         window.display();
     }
