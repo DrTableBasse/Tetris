@@ -1,8 +1,8 @@
-//#include <board.h>
+#include <board.h>
 #include <cstdio>
 #include <iostream>
-//#include <algorithme>
-//#include <SFML/Graphics.hpp>
+#include <algorithme>
+#include <SFML/Graphics.hpp>
 
 using namespace sf;
 using namespace std;
