@@ -10,7 +10,7 @@ set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ImGui)
 if (CMAKE_HOST_SYSTEM MATCHES Windows)
         # Source files
         file(GLOB SOURCES "src/*.cpp" 
-        "libs/ImGui/*.cpp"
+        "ImGui/*.cpp"
         )
 
         set(CMAKE_CURRENT_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dos-libs)
@@ -40,7 +40,7 @@ if (CMAKE_HOST_SYSTEM MATCHES Linux)
 
        # Source files
        file(GLOB SOURCES "src/*.cpp" 
-       "unix-libs/ImGui/*.cpp"
+       "ImGui/*.cpp"
        )
 
        set(CMAKE_CURRENT_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/unix-libs)
