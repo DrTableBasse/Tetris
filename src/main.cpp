@@ -14,8 +14,15 @@
 #include "../include/tetromino.h"
 #include <SFML/Audio.hpp>
 #include <vector>
+#include <IconsFontAwesome.h>
+#include <imconfig.h>
+#include <imgui-SFML.h>
+#include <imgui.h>
+#include "ImGuiUtils.h" //general config header
 
 using namespace sf;
+using namespace ImGui;
+
 
 bool verifyColision(const Tetromino &piece, const std::vector<Sprite> &blockList)
 {
@@ -46,13 +53,20 @@ int main()
     }
     window.setIcon(image.getSize().x, image.getSize().y, image.getPixelsPtr());
 
+    if (SFML::Init(window, true)){}
+   
+
+
     //texture create and loading spritesheet
     Texture texture;
     if(!texture.loadFromFile("../sprites/spritesheet.png"))
     {
         cout << "Le spritesheet n'a pas load\n";
     }
-
+    
+    int         volume=100;
+    bool        windowOpen = true;
+    Clock       deltaClock;
     Clock       clock;
     Clock       fall;
     SoundBuffer buffer;
@@ -63,7 +77,7 @@ int main()
         return -1;
     }
     sound.setBuffer(buffer);
-    //sound.play();
+    sound.play();
 
     //declaration of the board (default = 10x20)
     //you can access board.setsize() to change board's size
@@ -80,15 +94,20 @@ int main()
         Event event{};
         while(window.pollEvent(event))
         {
+            SFML::ProcessEvent(window, event);
+
             //Conditions to close the window
             if(event.type == Event::Closed)
             {
                 window.close();
             }
-            if(Keyboard::isKeyPressed(Keyboard::Escape))
-            {
-                return EXIT_SUCCESS;
-            }
+            if (event.type == sf::Event::KeyReleased) {
+                if (event.key.code == sf::Keyboard::Escape) {
+                    windowOpen = !windowOpen;
+                    break;
+                }
+            } 
+
             //remplacer par le menu pause
             if(Keyboard::isKeyPressed(Keyboard::Left))
             {
@@ -123,9 +142,35 @@ int main()
                 }
             }
         }
-
+        
+        //update la fenêtre 
+        SFML::Update(window,deltaClock.restart());
         //Clearing the window after each draw
         window.clear(Color(0, 0, 0));
+
+        if (windowOpen){
+        
+            Begin("window", NULL);
+                sound.pause();
+                if (ImGui::Button("Reprendre la partie")){
+                    windowOpen = false;
+                    sound.play();
+                    
+                }
+                
+                ImGui::SliderInt("Régler le volume", &volume, 0, 100);
+                sound.setVolume(volume);
+
+
+                if (ImGui::Button("Quitter le jeu"))
+                    return EXIT_SUCCESS;
+
+
+
+
+            End();
+        }
+
 
         //draw each piece blocks (max 4)
         for(const auto &block: piece.blocks)
@@ -137,7 +182,7 @@ int main()
             window.draw(block);
         }
 
-        if(fall.getElapsedTime().asSeconds() > 0.2)
+        if(fall.getElapsedTime().asSeconds() > 0.2 && !windowOpen)
         {
             piece.setpos(Vector2i(0, 24), 0);
             if(!verifyColision(piece, listBlock))
@@ -161,7 +206,9 @@ int main()
             }
             fall.restart();
         }
+        SFML::Render(window);
         window.display();
     }
+    SFML::Shutdown();
     return 0;
 }
