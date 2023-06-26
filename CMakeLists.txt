@@ -5,33 +5,71 @@ set(PROJECT_NAME tetris)
 
 project(${PROJECT_NAME} CXX)
 
-# Source files
-file(GLOB SOURCES "src/*.cpp" 
-"libs/ImGui/*.cpp"
-)
+set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ImGui)
 
-#SFML lib location
-set(SFML_DIR ${CMAKE_CURRENT_SOURCE_DIR}/SFML-2.5.1)
-set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs/ImGui)
+if (CMAKE_HOST_SYSTEM MATCHES Windows)
+        # Source files
+        file(GLOB SOURCES "src/*.cpp" 
+        "ImGui/*.cpp"
+        )
 
-include_directories(${SFML_DIR}/include
-${IMGUI_DIR}
-)
+        set(CMAKE_CURRENT_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dos-libs)
+  
+        #Lib location
+        set(SFML_DIR ${CMAKE_CURRENT_LIB_DIR}/SFML-2.5.1)
 
-link_directories(${SFML_DIR}/lib
-${IMGUI_DIR}
-)
+        include_directories(${SFML_DIR}/include
+        ${IMGUI_DIR}
+        )
+
+        link_directories(${SFML_DIR}/lib)
 
 
-add_executable(${PROJECT_NAME} ${SOURCES} src/main.cpp)
+        add_executable(${PROJECT_NAME} ${SOURCES} src/main.cpp)
 
-target_link_libraries(${PROJECT_NAME}
-        sfml-graphics
-        sfml-window
-        sfml-system
-        sfml-audio
-        opengl32
-)
-add_compile_options(
-        ofast   #-o3 optimizations on steroids
-)
+        target_link_libraries(${PROJECT_NAME}
+                sfml-graphics
+                sfml-window
+                sfml-system
+                sfml-audio
+                opengl32
+        )
+endif()
+
+if (CMAKE_HOST_SYSTEM MATCHES Linux)
+
+       # Source files
+       file(GLOB SOURCES "src/*.cpp" 
+       "ImGui/*.cpp"
+       )
+
+       set(CMAKE_CURRENT_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/unix-libs)
+ 
+       #Libs location
+       set(SFML_DIR ${CMAKE_CURRENT_LIB_DIR}/SFML-2.5.1)
+
+       include_directories(
+                ${SFML_DIR}/include
+                ${IMGUI_DIR}
+       )
+
+       link_directories(${SFML_DIR}/lib)
+
+
+       add_executable(${PROJECT_NAME} ${SOURCES} src/main.cpp)
+
+        # OpenGL
+        find_package(OpenGL REQUIRED)
+        find_package(GLUT REQUIRED)
+
+        target_link_libraries(
+                ${PROJECT_NAME}
+                ImGui-SFML
+                sfml-graphics
+                sfml-window
+                sfml-system
+                sfml-audio
+                openal FLAC
+                GLU GL X11 Xrandr udev pthread
+        )
+endif()
