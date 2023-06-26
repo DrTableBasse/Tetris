@@ -64,7 +64,6 @@ if (CMAKE_HOST_SYSTEM MATCHES Linux)
 
         target_link_libraries(
                 ${PROJECT_NAME}
-                ImGui-SFML
                 sfml-graphics
                 sfml-window
                 sfml-system
