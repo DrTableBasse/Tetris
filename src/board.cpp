@@ -27,7 +27,7 @@ void Board::size(int x, int y)
 Board::Board(void)
 {
     //Setting default size
-    this->size(24, 40);
+    this->size(10, 20);
     
     //remove these 2 lines, they are for debug
     // this->tab[1][3] = '1';
@@ -39,4 +39,4 @@ Board::Board(void)
 void Board::setsize(int x, int y)
 {
     size(x, y);
-};
+}
