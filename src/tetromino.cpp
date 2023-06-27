@@ -116,6 +116,48 @@ void Tetromino::resetType()
     this->type = types[std::rand() % 7];
 }
 
+bool Tetromino::verifyColision(const Tetromino &piece, const std::vector<Sprite> &blockList, Board &board, char direction)
+{
+	if(direction == 'L')
+		for(const auto &blockPiece : piece.blocks)
+		{
+			for(const auto &block : blockList)
+			{
+				if(blockPiece.getPosition().y == block.getPosition().y && blockPiece.getPosition().x-24 == block.getPosition().x)
+				{
+					return true;
+				}
+			}
+		}
+	if(direction == 'R')
+		for(const auto &blockPiece : piece.blocks)
+		{
+			for(const auto &block : blockList)
+			{
+				if(blockPiece.getPosition().y == block.getPosition().y && blockPiece.getPosition().x+24 == block.getPosition().x)
+				{
+					return true;
+				}
+			}
+		}
+	if(direction == 'D')
+		for(const auto &blockPiece : piece.blocks)
+		{
+			if(blockPiece.getPosition().y+24 == board.y*24)
+			{
+				return true;
+			}
+			for(const auto &block : blockList)
+			{
+				if(blockPiece.getPosition().y+24 == block.getPosition().y && blockPiece.getPosition().x == block.getPosition().x)
+				{
+					return true;
+				}
+			}
+		}
+	return false;
+}
+
 void Tetromino::reset()
 {
     resetType();

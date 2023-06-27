@@ -29,4 +29,6 @@ class Tetromino {
         void reset();
         void resetType();
         bool canControl = true;
+
+	static bool verifyColision(const Tetromino &piece, const std::vector <Sprite> &blockList, Board &board, char direction);
 };
