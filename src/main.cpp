@@ -69,7 +69,7 @@ int main(){
 
 	//piece declaration
 	std::vector<Sprite> listBlock;
-	Tetromino piece(&texture, 2, Vector2i(res.x, res.y));
+	Tetromino piece(&texture, 2, Vector2i(board.x, board.y));
 
 	//Frame loop
 	while(window.isOpen())
@@ -100,7 +100,7 @@ int main(){
 			{
 				while(clock.getElapsedTime().asSeconds() > 0.05f)
 				{
-					if(piece.pos.x - 24 >= 48 && !Tetromino::verifyColision(piece, listBlock, board, 'L'))
+					if(piece.pos.x - 24 >= 0 && !Tetromino::verifyColision(piece, listBlock, board, 'L'))
 					{
 						piece.setpos(Vector2i(-24, 0), 0);
 					}
@@ -186,6 +186,7 @@ int main(){
 				{
 					listBlock.push_back(block);
 				}
+
 				piece.reset();
 			}
 			fall.restart();

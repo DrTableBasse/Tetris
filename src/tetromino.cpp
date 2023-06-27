@@ -162,6 +162,6 @@ void Tetromino::reset()
 {
     resetType();
     this->state = 0;
-    this->pos.x = this->boardSize.x/2;
+    this->pos.x = this->boardSize.x*24/2;
     this->pos.y = 2*24;
 }
