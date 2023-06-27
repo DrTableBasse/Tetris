@@ -1,0 +1,32 @@
+name: Linux
+
+# Déclencher ce flux de travail lors d'un push ou d'une pull request
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build and test
+
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y git build-essential cmake ninja-build freeglut3-dev libopenal-dev libflac-dev libxrandr-dev libudev-dev
+
+    - uses: actions/checkout@v2
+       
+    - name: CMake configure
+      run: |
+        cd build
+        cmake .. -GNinja
+
+    - name: Tetris
+      run: |
+        cd build
+        ninja
