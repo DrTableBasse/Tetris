@@ -91,7 +91,7 @@ int main(){
 
 	//piece declaration
 	std::vector<Sprite> listBlock;
-	Tetromino piece(&texture, 2, Vector2i(board.x, board.y));
+	Tetromino piece(&texture, Vector2i(board.x, board.y)); //style here
 
 	//Frame loop
 	while(window.isOpen())
@@ -160,7 +160,10 @@ int main(){
 		//Shader frames handle
 
 		// Set the others parameters who need to be updated every frames
-		shader.setUniform("iTime", clk.getElapsedTime().asSeconds());
+		if (!windowOpen)
+			shader.setUniform("iTime", clk.getElapsedTime().asSeconds());
+		else
+			clk.restart();
 
 		Vector2i mousePos = Mouse::getPosition(window);
 		shader.setUniform("iMouse", Vector2f(mousePos.x, mousePos.y - res.x/2));
@@ -202,7 +205,7 @@ int main(){
 			{
 				for(const auto &block: piece.blocks)
 				{
-					board.tab[static_cast<int>(block.getPosition().x)/24][static_cast<int>(block.getPosition().y)/24] = 1;
+					board.tab[static_cast<int>(block.getPosition().x)/24][static_cast<int>(block.getPosition().y)/24] = '1';
 					listBlock.push_back(block);
 				}
 

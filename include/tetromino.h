@@ -20,7 +20,7 @@ class Tetromino {
         Vector2i boardSize; //board size
         
     public :
-        Tetromino(Texture *texture, int style, Vector2i boardSize); //constructor
+        Tetromino(Texture *texture, Vector2i boardSize); //constructor
         Vector2i pos;
         Sprite blocks[4]; //sprite board containing each block inside a piece
         int state{}; //rotation state (max 4) = 360 degrees
@@ -28,7 +28,10 @@ class Tetromino {
         void setpos(Vector2i pos, int state);
         void reset();
         void resetType();
+        char getType();
         bool canControl = true;
+        int style = 0;
+        //void setStyle(int style);
 
 	static bool verifyColision(const Tetromino &piece, const std::vector <Sprite> &blockList, Board &board, char direction);
 };
