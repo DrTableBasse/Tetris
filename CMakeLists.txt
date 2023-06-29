@@ -24,6 +24,9 @@ if (CMAKE_HOST_SYSTEM MATCHES Windows)
 
         link_directories(${SFML_DIR}/lib)
 
+        add_compile_options(
+                -static-libgcc -static-libstdc++ -static
+        )
 
         add_executable(${PROJECT_NAME} ${SOURCES} src/main.cpp)
 
