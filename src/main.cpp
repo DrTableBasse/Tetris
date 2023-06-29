@@ -27,6 +27,8 @@ int main(){
 	//resolution and creation of window
 	Vector2i res(720, 1080);
 	RenderWindow window(VideoMode(res.x, res.y), "TetrESGI", Style::Titlebar | Style::Close);
+	window.setFramerateLimit(60);
+    window.setVerticalSyncEnabled(true);
 
 	//loading icon
 	auto image = sf::Image{};
@@ -38,7 +40,27 @@ int main(){
 
 	if(SFML::Init(window, true))
 	{}
+	
+	// Create a texture and a sprite for the shader
+	Texture tex;
+	tex.create(res.x, res.y);
+	Sprite spr(tex);
+	Shader shader;
 
+	shader.loadFromFile("../shaders/firetunnel.glsl", Shader::Fragment); // load the shader
+
+	if (!shader.isAvailable()) {
+		std::cout << "The shader is not available\n";
+	}
+
+	// Set the resolution parameter (the resoltion is divided to make the fire smaller)
+	shader.setUniform("iResolution", Vector2f(res.x / 2, res.y / 2));
+
+	// Use a timer to obtain the time elapsed
+	Clock clk;
+	clk.restart(); // start Shader iTime
+	
+	sf::Vector2f fragCoord;
 
 
 	//texture create and loading spritesheet
@@ -135,8 +157,15 @@ int main(){
 				}
 			}
 		}
+		//Shader frames handle
 
-		//update la fenêtre
+		// Set the others parameters who need to be updated every frames
+		shader.setUniform("iTime", clk.getElapsedTime().asSeconds());
+
+		Vector2i mousePos = Mouse::getPosition(window);
+		shader.setUniform("iMouse", Vector2f(mousePos.x, mousePos.y - res.x/2));
+
+		//update la fenêtre sous ImGui
 		SFML::Update(window, deltaClock.restart());
 		//Clearing the window after each draw
 		window.clear(Color(0, 0, 0));
@@ -166,17 +195,6 @@ int main(){
 			End();
 		}
 
-
-		//draw each piece blocks (max 4)
-		for(const auto &block: piece.blocks)
-		{
-			window.draw(block);
-		}
-		for(const auto &block: listBlock)
-		{
-			window.draw(block);
-		}
-
 		if(fall.getElapsedTime().asSeconds() > 0.2 && !windowOpen)
 		{
 			piece.setpos(Vector2i(0, 24), 0);
@@ -191,6 +209,22 @@ int main(){
 			}
 			fall.restart();
 		}
+
+		//Draw section
+
+		window.draw(spr, &shader); //Shader render
+
+
+		//draw each piece blocks (max 4)
+		for(const auto &block: piece.blocks)
+		{
+			window.draw(block);
+		}
+		for(const auto &block: listBlock)
+		{
+			window.draw(block);
+		}
+
 		SFML::Render(window);
 		window.display();
 	}
