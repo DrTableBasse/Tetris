@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "../include/board.h"
-
+ 
 using namespace sf;
 using namespace std;
 using std::cout; 
