@@ -70,7 +70,7 @@ int main(){
 		cout << "Le spritesheet n'a pas load\n";
 	}
 
-	int volume = 100;
+	int volume = 0;
 	bool windowOpen = true;
 	Clock deltaClock;
 	Clock clock;
@@ -202,6 +202,7 @@ int main(){
 			{
 				for(const auto &block: piece.blocks)
 				{
+					board.tab[static_cast<int>(block.getPosition().x)/24][static_cast<int>(block.getPosition().y)/24] = 1;
 					listBlock.push_back(block);
 				}
 
