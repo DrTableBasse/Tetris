@@ -1,0 +1,36 @@
+name: Créer une release .exe pour Windows
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout du code
+      uses: actions/checkout@v2
+
+    - name: Configuration de l'environnement C++
+      uses: actions/setup-cpp@v2
+     
+    - name: Compilation du code
+      run: |
+        # Compiler votre code C++ en tant que fichier .exe
+        # Utilisez les commandes spécifiques à votre environnement de développement pour générer l'exécutable pour Windows
+
+    - name: Récupérer le numéro de build
+      id: build
+      run: echo "::set-output name=BUILD_NUMBER::$(Build.BuildNumber)"
+
+    - name: Création de la release
+      uses: actions/create-release@v1
+      with:
+        tag_name: v1.0.$(env.BUILD_NUMBER) # Utilise le numéro de build dans le tag_name
+        release_name: Release v1.0.$(env.BUILD_NUMBER) # Utilise le numéro de build dans le release_name
+        body: |
+          Description de la release
+        asset_path: ./build/tetris.exe
+        asset_name: tetris.exe
