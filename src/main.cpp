@@ -19,6 +19,7 @@
 #include <imgui-SFML.h>
 #include <imgui.h>
 #include "ImGuiUtils.h" //general config header
+#include "ligneCompleteEtCalculPoints.cpp"
 
 using namespace sf;
 using namespace ImGui;
@@ -207,6 +208,8 @@ int main(){
 				{
 					board.tab[static_cast<int>(block.getPosition().x)/24][static_cast<int>(block.getPosition().y)/24] = '1';
 					listBlock.push_back(block);
+					int score = 0;
+					testLignePleine(int score);
 				}
 
 				piece.reset();
