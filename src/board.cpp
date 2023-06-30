@@ -39,4 +39,4 @@ Board::Board(void)
 void Board::setsize(int x, int y)
 {
     size(x, y);
-};
+}

@@ -12,10 +12,11 @@
 #include "../include/piece.h"
 #include <SFML/Graphics.hpp>
 #include <cstdlib>
+#include <iostream>
 
 using namespace sf;
 
-Tetromino::Tetromino(Texture *texture, int style, Vector2i boardSize)
+Tetromino::Tetromino(Texture *texture, Vector2i boardSize)
 {
     //setting default positions of piece
     for(auto & block : this->blocks)
@@ -67,47 +68,59 @@ void Tetromino::setpos(Vector2i pos, int state)
                         blocks[indexBlockPiece].setPosition(i * 24 + this->pos.x, j * 24 + this->pos.y);
                         indexBlockPiece++;
                     }
+                    style = 7;
                 break;
                 case 'i':
                     if (i_piece[this->state][j][i] > 0) {
                         blocks[indexBlockPiece].setPosition(i * 24 + this->pos.x, j * 24 + this->pos.y);
                         indexBlockPiece++;
                     }
+                    style = 0;
                 break;
                 case 'j':
                     if (j_piece[this->state][j][i] > 0) {
                         blocks[indexBlockPiece].setPosition(i * 24 + this->pos.x, j * 24 + this->pos.y);
                         indexBlockPiece++;
                     }
+                    style = 2;
                 break;
                 case 'l':
                     if (l_piece[this->state][j][i] > 0) {
                         blocks[indexBlockPiece].setPosition(i * 24 + this->pos.x, j * 24 + this->pos.y);
                         indexBlockPiece++;
                     }
+                    style = 3;
                 break;
                 case 's':
                     if (s_piece[this->state][j][i] > 0) {
                         blocks[indexBlockPiece].setPosition(i * 24 + this->pos.x, j * 24 + this->pos.y);
                         indexBlockPiece++;
                     }
+                    style = 4;
                 break;
                 case 'z':
                     if (z_piece[this->state][j][i] > 0) {
                         blocks[indexBlockPiece].setPosition(i * 24 + this->pos.x, j * 24 + this->pos.y);
                         indexBlockPiece++;
                     }
+                    style = 5;
                 break;
                 case 'o':
                     if (o_piece[this->state][j][i] > 0) {
                         blocks[indexBlockPiece].setPosition(i * 24 + this->pos.x, j * 24 + this->pos.y);
                         indexBlockPiece++;
                     }
+                    style = 6;
                 break;
             } 
         }
     }
     indexBlockPiece = 0;
+
+    bounds.left = 24 * style;
+    //assign texture to the blocks in the piece
+    for(auto & block : this->blocks)
+        block.setTextureRect(bounds);
 }
 
 void Tetromino::resetType()
@@ -116,10 +129,52 @@ void Tetromino::resetType()
     this->type = types[std::rand() % 7];
 }
 
+bool Tetromino::verifyColision(const Tetromino &piece, const std::vector<Sprite> &blockList, Board &board, char direction)
+{
+	if(direction == 'L')
+		for(const auto &blockPiece : piece.blocks)
+		{
+			for(const auto &block : blockList)
+			{
+				if(blockPiece.getPosition().y == block.getPosition().y && blockPiece.getPosition().x-24 == block.getPosition().x)
+				{
+					return true;
+				}
+			}
+		}
+	if(direction == 'R')
+		for(const auto &blockPiece : piece.blocks)
+		{
+			for(const auto &block : blockList)
+			{
+				if(blockPiece.getPosition().y == block.getPosition().y && blockPiece.getPosition().x+24 == block.getPosition().x)
+				{
+					return true;
+				}
+			}
+		}
+	if(direction == 'D')
+		for(const auto &blockPiece : piece.blocks)
+		{
+			if(blockPiece.getPosition().y+24 == board.y*24)
+			{
+				return true;
+			}
+			for(const auto &block : blockList)
+			{
+				if(blockPiece.getPosition().y+24 == block.getPosition().y && blockPiece.getPosition().x == block.getPosition().x)
+				{
+					return true;
+				}
+			}
+		}
+	return false;
+}
+
 void Tetromino::reset()
 {
     resetType();
     this->state = 0;
-    this->pos.x = this->boardSize.x/2;
+    this->pos.x = this->boardSize.x*24/2;
     this->pos.y = 2*24;
 }
