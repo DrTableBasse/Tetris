@@ -99,7 +99,7 @@ int testLignePleine(int score, Board board)
 		for(j = 0; j < 10; j++)
 		{
 			// ligne
-			if(board.tab[i][j] == '0')
+			if(board.tab[i][j] == 0)
 			{
 				//Si une seul case est vide (=0) alors la ligne n'est pas complete
 				!verif[i]; //Donc on assigne False à la ligne
