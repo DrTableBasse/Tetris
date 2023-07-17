@@ -50,7 +50,7 @@ int main(){
 
 	shader.loadFromFile("../shaders/firetunnel.glsl", Shader::Fragment); // load the shader
 
-	if (!shader.isAvailable()) {
+	if (!sf::Shader::isAvailable()) {
 		std::cout << "The shader is not available\n";
 	}
 
@@ -88,7 +88,7 @@ int main(){
 
 	//declaration of the board (default = 10x20)
 	//you can access board.setsize() to change board's size
-	Board board;
+	Board board(10, 20);
 
 	//piece declaration
 	std::vector<Sprite> listBlock;
@@ -206,10 +206,10 @@ int main(){
 			{
 				for(const auto &block: piece.blocks)
 				{
-					board.tab[static_cast<int>(block.getPosition().x)/24][static_cast<int>(block.getPosition().y)/24] = '1';
+					board.tab[static_cast<int>(block.getPosition().x)/24][static_cast<int>(block.getPosition().y)/24] = 1;
 					listBlock.push_back(block);
 					int score = 0;
-					testLignePleine(int score);
+					testLignePleine(score, board);
 				}
 
 				piece.reset();
@@ -231,6 +231,16 @@ int main(){
 		{
 			window.draw(block);
 		}
+//		for(int i = 0; i < board.x; i++)
+//		{
+//			for(int j = 0; j < board.y; j++)
+//			{
+//				if(board.tab[i][j] == 1)
+//				{
+//					window.draw(board.tab[i][j]);
+//				}
+//			}
+//		}
 
 		SFML::Render(window);
 		window.display();
