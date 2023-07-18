@@ -17,21 +17,6 @@ int LigneCompleteEtCalculPoints::incrementeScore(int score)
 	return score;
 }
 
-void LigneCompleteEtCalculPoints::decaleLigne(int a, const bool *verif, Board board, vector<Sprite>& listBlock)
-{
-	for(int i = 0; i < board.x; i++)
-	{
-		for(int j = 0; j < board.y; j++)
-		{
-			if(i+1 <= board.x && board.tab[i][j] == 1 && board.tab[i+1][j] == 0)
-			{
-				board.tab[i+1][j] = 1;
-				board.tab[i][j] = 0;
-			}
-		}
-	}
-}
-
 void LigneCompleteEtCalculPoints::supprimerLigne(int i, Board board, vector<Sprite>& listBlock)
 {
 	int j;
@@ -48,14 +33,6 @@ void LigneCompleteEtCalculPoints::supprimerLigne(int i, Board board, vector<Spri
 		board.tab[i][j] = 0; //On met toutes les case de la ligne à 0
 	}
 }
-
-//for(auto & block : piece.blocks)
-//{
-//sf::Sprite tempBlock = block;
-//tempBlock.setPosition(Vector2f(block.getPosition().x+24, block.getPosition().y));
-//block = tempBlock;
-//}
-
 
 int LigneCompleteEtCalculPoints::testLignePleine(int score, Board board, vector<Sprite>& listBlock)
 {
@@ -90,6 +67,5 @@ int LigneCompleteEtCalculPoints::testLignePleine(int score, Board board, vector<
 		}
 	}
 
-	decaleLigne(j, verif, board, listBlock); //FOnction pour faire chuter le reste des lignes restantes après suppréssion des lignes complètes
 	return score;
 }
