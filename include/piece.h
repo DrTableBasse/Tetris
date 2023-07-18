@@ -7,7 +7,7 @@
  Description : Creation of basic pieces for the tetris program
 
 */
-
+#pragma once
 #define N \
     char o_piece[][4][4] { \
         {\

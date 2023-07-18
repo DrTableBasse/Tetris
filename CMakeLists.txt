@@ -28,7 +28,8 @@ if (CMAKE_HOST_SYSTEM MATCHES Windows)
                 -static-libgcc -static-libstdc++ -static
         )
 
-        add_executable(${PROJECT_NAME} ${SOURCES} src/main.cpp)
+        add_executable(${PROJECT_NAME} ${SOURCES} src/main.cpp
+                include/ligneCompleteEtCalculPoints.h)
 
         target_link_libraries(${PROJECT_NAME}
                 sfml-graphics
@@ -59,7 +60,8 @@ if (CMAKE_HOST_SYSTEM MATCHES Linux)
        link_directories(${SFML_DIR}/lib)
 
 
-       add_executable(${PROJECT_NAME} ${SOURCES} src/main.cpp)
+       add_executable(${PROJECT_NAME} ${SOURCES} src/main.cpp
+               include/ligneCompleteEtCalculPoints.h)
 
         # OpenGL
         find_package(OpenGL REQUIRED)

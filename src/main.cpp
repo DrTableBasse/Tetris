@@ -13,13 +13,9 @@
 #include <SFML/Graphics.hpp>
 #include "../include/tetromino.h"
 #include <SFML/Audio.hpp>
-#include <vector>
-#include <IconsFontAwesome.h>
-#include <imconfig.h>
 #include <imgui-SFML.h>
 #include <imgui.h>
-#include "ImGuiUtils.h" //general config header
-#include "ligneCompleteEtCalculPoints.cpp"
+#include "../include/ligneCompleteEtCalculPoints.h"
 
 using namespace sf;
 using namespace ImGui;
@@ -206,10 +202,17 @@ int main(){
 			{
 				for(const auto &block: piece.blocks)
 				{
-					board.tab[static_cast<int>(block.getPosition().x)/24][static_cast<int>(block.getPosition().y)/24] = 1;
+					if(static_cast<int>(block.getPosition().x)/24 >= board.x)
+					{
+						board.tab[board.x-1][static_cast<int>(block.getPosition().y)/24] = 1;
+					}
+					else
+					{
+						board.tab[static_cast<int>(block.getPosition().x)/24][static_cast<int>(block.getPosition().y)/24] = 1;
+					}
 					listBlock.push_back(block);
 					int score = 0;
-					testLignePleine(score, board);
+					LigneCompleteEtCalculPoints::testLignePleine(score, board, listBlock);
 				}
 
 				piece.reset();

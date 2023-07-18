@@ -7,7 +7,7 @@
  Description : basic class for defining a piece composed of multiple blocks
 
 */
-
+#pragma once
 #include <SFML/Graphics.hpp>
 #include "./board.h"
 using namespace sf;

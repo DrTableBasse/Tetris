@@ -7,7 +7,7 @@
  Description : this is a 2D board defined by a char **str
 
 */
-
+#pragma once
 #include <SFML/Graphics.hpp>
 
 using namespace sf;

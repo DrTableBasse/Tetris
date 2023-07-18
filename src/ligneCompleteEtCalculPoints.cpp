@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../include/board.h"
+#include "../include/ligneCompleteEtCalculPoints.h"
 
 using namespace sf;
 using namespace std;
@@ -11,80 +11,53 @@ using std::rotate;
 using std::endl;
 
 
-int incrementeScore(int score)
+int LigneCompleteEtCalculPoints::incrementeScore(int score)
 {
 	score = score + 100; // pour chaque ligne supprimé, on ajout 100 points
 	return score;
 }
 
-void decaleLigne(int a, const bool *verif, Board board)
+void LigneCompleteEtCalculPoints::decaleLigne(int a, const bool *verif, Board board, vector<Sprite>& listBlock)
 {
-
-	int i = 0;
-	int j, k;
-	int b = 0;
-	int Tab[] = {false };
-
-	for(j = 0; j < 20; j++)
+	for(int i = 0; i < board.x; i++)
 	{
-		if(verif[j])
+		for(int j = 0; j < board.y; j++)
 		{
-			//On détermine quel lignes ont été supprimés
-			Tab[i] = j; // et on les stocke leur numéros dans un tableau
-			i = i + 1;
-		}
-	}
-
-	for(i = 0; i < a; i++)
-	{
-		//Décalle tous le tableau de 1 case vers le bas pour les lignes > à la ligne qui est supprimé
-		if(i == a - 1)
-		{
-			//Si on arrive en haut du tableau :
-			for(j = Tab[i]; j < 20 - a; j++)
+			if(i+1 <= board.x && board.tab[i][j] == 1 && board.tab[i+1][j] == 0)
 			{
-				for(k = 0; k < 10; k++)
-				{
-					board.tab[i][j] = board.tab[j + 1 + b][k];
-				}
+				board.tab[i+1][j] = 1;
+				board.tab[i][j] = 0;
 			}
-		} else
-		{
-			//sinon :
-			for(j = Tab[i]; j < Tab[i + 1]; j++)
-			{
-				//Si il y a plusieurs lignes supprimé, les lignes déscende d'autant
-				for(k = 0; k < 10; k++)
-				{
-					board.tab[i][j] = board.tab[j + 1 + b][k];
-				}
-				b = b + 1;
-			}
-		}
-	}
-
-	for(i = 0; i < a; i++)
-	{
-		for(j = 0; j < 10; j++)
-		{
-			// la(les) dernière(s) lignes en haut du tableau sont mise à zéro
-			board.tab[i][j] = 0;
 		}
 	}
 }
 
-void supprimerLigne(int i, Board board)
+void LigneCompleteEtCalculPoints::supprimerLigne(int i, Board board, vector<Sprite>& listBlock)
 {
 	int j;
 
+	std::vector<Sprite> newListBlock;
+	for(const auto& block : listBlock) {
+		if(static_cast<int>(block.getPosition().x) / 24 != i) {
+			newListBlock.push_back(block);
+		}
+	}
 	for(j = 0; j < 10; j++)
 	{
+		listBlock = newListBlock;
 		board.tab[i][j] = 0; //On met toutes les case de la ligne à 0
 	}
 }
 
+//for(auto & block : piece.blocks)
+//{
+//sf::Sprite tempBlock = block;
+//tempBlock.setPosition(Vector2f(block.getPosition().x+24, block.getPosition().y));
+//block = tempBlock;
+//}
 
-int testLignePleine(int score, Board board)
+
+int LigneCompleteEtCalculPoints::testLignePleine(int score, Board board, vector<Sprite>& listBlock)
 {
 	//le score est importé par le reste du code
 	int i; //i = colonne
@@ -112,11 +85,11 @@ int testLignePleine(int score, Board board)
 		{
 			// Si elle est complete :
 			j = j + 1; // nombre de ligne pleine ( et donc supprimé)
-			supprimerLigne(i, board); // on suprime la ligne
+			supprimerLigne(i, board, listBlock); // on suprime la ligne
 			score = incrementeScore(score);// on incremente le score pour chaque ligne
 		}
 	}
 
-	decaleLigne(j, verif, board); //FOnction pour faire chuter le reste des lignes restantes après suppréssion des lignes complètes
+	decaleLigne(j, verif, board, listBlock); //FOnction pour faire chuter le reste des lignes restantes après suppréssion des lignes complètes
 	return score;
 }
