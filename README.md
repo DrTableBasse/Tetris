@@ -17,3 +17,5 @@
   make
   ./tetris
   ```
+## PowerPoint
+https://1drv.ms/p/s!Au2fpVol-WCJgpNrG8yKXrbNw2E5EA?e=43gGrg
