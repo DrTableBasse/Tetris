@@ -1,11 +1,9 @@
-//#include <board.h>
-#include <cstdio>
 #include <iostream>
-//#include <algorithme>
-//#include <SFML/Graphics.hpp>
+#include "../include/board.h"
 
 using namespace sf;
 using namespace std;
+
 using std::cout;
 using std::vector;
 using std::array;
